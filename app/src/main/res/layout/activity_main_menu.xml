@@ -1,28 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <Button
+        android:id="@+id/compassMenuButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="120dp"
+        android:backgroundTint="#E2C100"
+        android:drawableStart="@drawable/ic_explore_black_24dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingHorizontal="78dp"
+        android:text="@string/compass_menu_text"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3B3B3B"
+        android:textSize="42sp" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#000000"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <Button
+        android:id="@+id/altimeterMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:backgroundTint="#4598C4"
+        android:drawableStart="@drawable/ic_flight_takeoff_black_24dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingHorizontal="78dp"
+        android:text="@string/altimeter_menu_text"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3B3B3B"
+        android:textSize="42sp" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    <Button
+        android:id="@+id/levelMenuButton"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:backgroundTint="#85C443"
+        android:drawableStart="@drawable/ic_gps_fixed_black_24dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingHorizontal="78dp"
+        android:text="@string/level_menu_text"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3B3B3B"
+        android:textSize="42sp" />
 
-    <include
-        layout="@layout/content_main"
-        android:background="#007272" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Measuring_Toolkit</string>
     <string name="action_settings">Settings</string>
+    <string name="compass_menu_text">Compass</string>
+    <string name="altimeter_menu_text">Altimeter</string>
+    <string name="level_menu_text">Level</string>
 </resources>
