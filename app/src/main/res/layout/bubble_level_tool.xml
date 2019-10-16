@@ -9,16 +9,69 @@
 
     <Button
         android:id="@+id/backButton_level"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="341dp"
-        android:layout_marginBottom="342dp"
+        android:layout_marginBottom="341dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/back_button_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gyroZData" />
+
+    <TextView
+        android:id="@+id/sensorDataTV"
+        android:layout_width="388dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="115dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="28dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/gyroXData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gyroXData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/gyroYData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensorDataTV"
+        tools:text=" gyro X = 000" />
+
+    <TextView
+        android:id="@+id/gyroYData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="9dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/gyroZData"
+        app:layout_constraintEnd_toEndOf="@+id/gyroXData"
+        app:layout_constraintTop_toBottomOf="@+id/gyroXData"
+        tools:text="gyro Y = 000" />
+
+    <TextView
+        android:id="@+id/gyroZData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/backButton_level"
+        app:layout_constraintStart_toStartOf="@+id/gyroYData"
+        app:layout_constraintTop_toBottomOf="@+id/gyroYData"
+        tools:text="gyro Z = 000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
