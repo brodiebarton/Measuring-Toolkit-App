@@ -5,4 +5,5 @@
     <string name="altimeter_menu_text">Altimeter</string>
     <string name="level_menu_text">Level</string>
     <string name="back_button_text">Back</string>
+    <string name="todo">TODO</string>
 </resources>
