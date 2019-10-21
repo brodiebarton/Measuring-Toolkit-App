@@ -97,7 +97,7 @@ public class BubbleLevelActivity extends AppCompatActivity {
                     accelY.setText("accelY = " + String.valueOf(sensorEvent.values[1]));
                     accelZ.setText("accelZ = " + String.valueOf(sensorEvent.values[2]));
 
-                    degreeTV.setText(String.format(Locale.getDefault(),"%1$.2f %",sensorEvent.values[0],R.string.degreeSymbol));
+                    degreeTV.setText(String.format(Locale.getDefault(),"%1$.2f",sensorEvent.values[0]));
                 }
 
                 @Override
