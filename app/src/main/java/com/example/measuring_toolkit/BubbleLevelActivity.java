@@ -14,10 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class BubbleLevelActivity extends AppCompatActivity {
 
     private Button backButton;
-    private TextView sensorDataTextView, gyroX, gyroY, gyroZ;
+    private TextView sensorDataTextView, gyroX, gyroY, gyroZ,  accelX, accelY, accelZ;
     private SensorManager mySensorManager;
-    private Sensor gyro;
-    private SensorEventListener gyroSensorListener;
+    private Sensor gyro, accel;
+    private SensorEventListener gyroSensorListener, accelSensorListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,9 @@ public class BubbleLevelActivity extends AppCompatActivity {
             gyroX = findViewById(R.id.gyroXData);
             gyroY = findViewById(R.id.gyroYData);
             gyroZ = findViewById(R.id.gyroZData);
+            accelX = findViewById(R.id.accelXData);
+            accelY = findViewById(R.id.accelYData);
+            accelZ = findViewById(R.id.accelZData);
 
             // Buttons
             backButton = findViewById(R.id.backButton_level);
@@ -45,6 +48,15 @@ public class BubbleLevelActivity extends AppCompatActivity {
             } else {
                 // Gyroscope Does Not Exist!
                 sensorDataTextView.setText("FAIL: Gyroscope Sensor Not Found!");
+            }
+
+            if (mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+                // Accelerometer Exists
+                sensorDataTextView.setText("SUCCESS: Found Accelerometer Sensor");
+                accel = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            } else {
+                // Gyroscope Does Not Exist!
+                sensorDataTextView.setText("FAIL: Accelerometer Sensor Not Found!");
             }
 
         // Listeners
@@ -63,10 +75,24 @@ public class BubbleLevelActivity extends AppCompatActivity {
             gyroSensorListener = new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent sensorEvent) {
-                    gyroX.setText(String.valueOf(sensorEvent.values[0]));
-                    gyroY.setText(String.valueOf(sensorEvent.values[1]));
-                    gyroZ.setText(String.valueOf(sensorEvent.values[2]));
+                    gyroX.setText("gyroX = " + String.valueOf(sensorEvent.values[0]));
+                    gyroY.setText("gyroY = " + String.valueOf(sensorEvent.values[1]));
+                    gyroZ.setText("gyroZ = " + String.valueOf(sensorEvent.values[2]));
 
+                }
+
+                @Override
+                public void onAccuracyChanged(Sensor sensor, int i) {
+
+                }
+            };
+
+            accelSensorListener = new SensorEventListener() {
+                @Override
+                public void onSensorChanged(SensorEvent sensorEvent) {
+                    accelX.setText("accelX = " + String.valueOf(sensorEvent.values[0]));
+                    accelY.setText("accelY = " + String.valueOf(sensorEvent.values[1]));
+                    accelZ.setText("accelZ = " + String.valueOf(sensorEvent.values[2]));
                 }
 
                 @Override
@@ -83,6 +109,9 @@ public class BubbleLevelActivity extends AppCompatActivity {
 
         // Register Gyroscope Sensor Event Listener
         mySensorManager.registerListener(gyroSensorListener, gyro, SensorManager.SENSOR_DELAY_NORMAL);
+
+        // Register Accelerometer Sensor Event Listener
+        mySensorManager.registerListener(accelSensorListener, accel,SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -90,5 +119,8 @@ public class BubbleLevelActivity extends AppCompatActivity {
         super.onPause();
         // Unregister Gyroscope Sensor Event Listener
         mySensorManager.unregisterListener(gyroSensorListener);
+
+        // Unregister Accelerometer Sensor Event Listener
+        mySensorManager.unregisterListener(accelSensorListener);
     }
 }
