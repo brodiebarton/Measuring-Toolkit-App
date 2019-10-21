@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
+
 public class BubbleLevelActivity extends AppCompatActivity {
 
     private Button backButton;
-    private TextView sensorDataTextView, gyroX, gyroY, gyroZ,  accelX, accelY, accelZ;
+    private TextView sensorDataTextView, gyroX, gyroY, gyroZ,  accelX, accelY, accelZ, degreeTV;
     private SensorManager mySensorManager;
     private Sensor gyro, accel;
     private SensorEventListener gyroSensorListener, accelSensorListener;
@@ -34,6 +36,7 @@ public class BubbleLevelActivity extends AppCompatActivity {
             accelX = findViewById(R.id.accelXData);
             accelY = findViewById(R.id.accelYData);
             accelZ = findViewById(R.id.accelZData);
+            degreeTV = findViewById(R.id.levelDegreeTV);
 
             // Buttons
             backButton = findViewById(R.id.backButton_level);
@@ -93,6 +96,8 @@ public class BubbleLevelActivity extends AppCompatActivity {
                     accelX.setText("accelX = " + String.valueOf(sensorEvent.values[0]));
                     accelY.setText("accelY = " + String.valueOf(sensorEvent.values[1]));
                     accelZ.setText("accelZ = " + String.valueOf(sensorEvent.values[2]));
+
+                    degreeTV.setText(String.format(Locale.getDefault(),"%1$.2f %",sensorEvent.values[0],R.string.degreeSymbol));
                 }
 
                 @Override

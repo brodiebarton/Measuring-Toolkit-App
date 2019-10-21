@@ -5,11 +5,12 @@
     android:id="@+id/LevelConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#85C443"
     android:orientation="vertical">
 
     <Button
         android:id="@+id/backButton_level"
-        android:layout_width="411dp"
+        android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="94dp"
         android:layout_marginBottom="210dp"
@@ -31,6 +32,7 @@
         android:layout_marginBottom="5dp"
         android:text="TextView"
         android:textAlignment="center"
+        android:textColor="#3B3B3B"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +60,7 @@
             android:layout_marginStart="1dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="#3B3B3B"
             android:textSize="18sp"
             tools:text=" gyro X = 000" />
 
@@ -67,6 +70,7 @@
             android:layout_height="30dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="#3B3B3B"
             android:textSize="18sp"
             tools:text="gyro Y = 000" />
 
@@ -76,6 +80,7 @@
             android:layout_height="30dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="#3B3B3B"
             android:textSize="18sp"
             tools:text="gyro Z = 000" />
 
@@ -89,6 +94,7 @@
             android:layout_height="30dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="#3B3B3B"
             android:textSize="18sp"
             tools:text="accel X = 000" />
 
@@ -98,6 +104,7 @@
             android:layout_height="30dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="#3B3B3B"
             android:textSize="18sp"
             tools:text="accel Y = 000" />
 
@@ -107,8 +114,27 @@
             android:layout_height="30dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textColor="#3B3B3B"
             android:textSize="18sp"
             tools:text=" accel Z = 000" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/levelDegreeTV"
+        android:layout_width="409dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="118dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#3B3B3B"
+        android:textSize="66sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton_level"
+        tools:text="0\u00B0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
