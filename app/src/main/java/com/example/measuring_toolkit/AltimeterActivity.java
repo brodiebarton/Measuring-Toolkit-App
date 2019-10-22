@@ -18,9 +18,10 @@ import androidx.core.content.ContextCompat;
 public class AltimeterActivity extends AppCompatActivity implements LocationListener {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 99;
-    private Button backButton;
+    private Button backButton, switchUnits;
     private TextView alt, lat, lon;
     private LocationManager locationManager;
+    private boolean ft = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
         lat = findViewById(R.id.lat);
         lon = findViewById(R.id.lon);
         backButton = findViewById(R.id.backButton_altimeter);
+        switchUnits = findViewById(R.id.units);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -54,6 +56,12 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
             }
         });
 
+        switchUnits.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                ft = !ft;
+            }
+        });
     }
 
     @Override
@@ -92,7 +100,12 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
         double la = location.getLatitude();
         double lo = location.getLongitude();
 
-        alt.setText(a + "m");
+        if(ft){
+            alt.setText(String.format("%.2f ft", (a * 3.821)));
+        }
+        else {
+            alt.setText(String.format("%.2f m", a));
+        }
         lat.setText(String.format("%.5f", la));
         lon.setText(String.format("%.5f", lo));
     }

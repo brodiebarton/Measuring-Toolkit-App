@@ -9,4 +9,5 @@
     <string name="degreeSymbol">0x00B0</string>
     <string name="latitude">Latitude: </string>
     <string name="longitude">Longitude: </string>
+    <string name="switch_units">Switch Units</string>
 </resources>
