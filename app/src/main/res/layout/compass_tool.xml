@@ -11,17 +11,24 @@
         android:id="@+id/tvHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="101dp"
+        android:text="0.00"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#3B3B3B" />
 
     <ImageView
         android:id="@+id/imageViewCompass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="389dp"
+        android:layout_height="554dp"
         android:layout_below="@+id/tvHeading"
+
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-9dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/compass" />
 
@@ -40,4 +47,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </RelativeLayout>

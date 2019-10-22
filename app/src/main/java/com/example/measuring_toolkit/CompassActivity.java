@@ -93,13 +93,31 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 Animation anim = new RotateAnimation(currentAzimuth, azimuth, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 currentAzimuth = azimuth;
 
+                int azmth = Math.round(azimuth);
+
                 anim.setDuration(500);
                 anim.setRepeatCount(0);
                 anim.setFillAfter(true);
 
                 compassImage.startAnimation(anim);
 
-                textDegrees.setText("Heading: " + df.format(azimuth) + " degrees");
+                if (azmth <= 22 || azmth >= 337) {
+                    textDegrees.setText(df.format(azimuth) + "° N");
+                } else if (azmth >= 23 && azmth <= 67) {
+                    textDegrees.setText(df.format(azimuth) + "° NE");
+                } else if (azmth >= 68 && azmth <= 112) {
+                    textDegrees.setText(df.format(azimuth) + "° E");
+                } else if (azmth >= 113 && azmth <= 157) {
+                    textDegrees.setText(df.format(azimuth) + "° SE");
+                } else if (azmth >= 158 && azmth <= 202) {
+                    textDegrees.setText(df.format(azimuth) + "° S");
+                } else if (azmth >= 203 && azmth <= 247) {
+                    textDegrees.setText(df.format(azimuth) + "° SW");
+                } else if (azmth >= 248 && azmth <= 292) {
+                    textDegrees.setText(df.format(azimuth) + "° W");
+                } else if (azmth >= 293 && azmth <= 336) {
+                    textDegrees.setText(df.format(azimuth) + "° NW");
+                }
             }
         }
     }
