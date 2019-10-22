@@ -20,10 +20,9 @@ import java.util.Locale;
 public class BubbleLevelActivity extends AppCompatActivity implements SensorEventListener {
 
     private Button backButton;
-    private TextView gyroX, gyroY, gyroZ,  accelX, accelY, accelZ, degreeTV;
+    private TextView degreeTV;
     private SensorManager mySensorManager;
-    private Sensor magno, accel;
-    private SensorEventListener magnoEventListener, accelSensorListener;
+    private Sensor magno, accel;;
     private ImageView ball, bubble;
     private float[] accelValues, magValues, matrixR, matrixI;
     private float azimuth, pitch, roll, ballOrigin;
@@ -38,21 +37,9 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
         bubble = findViewById(R.id.bubble_imageView);
 
 
-
-
-
-
-
             matrixR = new float[9];
             matrixI = new float[9];
 
-            // TextViews
-//            gyroX = findViewById(R.id.gyroXData);
-//            gyroY = findViewById(R.id.gyroYData);
-//            gyroZ = findViewById(R.id.gyroZData);
-//            accelX = findViewById(R.id.accelXData);
-//            accelY = findViewById(R.id.accelYData);
-//            accelZ = findViewById(R.id.accelZData);
             degreeTV = findViewById(R.id.levelDegreeTV);
             degreeTV.setText("0" + (char)0x00B0);
 
@@ -87,42 +74,6 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
                     finish();
                 }
             });
-
-            // Sensor Event Listeners
-
-
-//            magnoEventListener = new SensorEventListener() {
-//                @Override
-//                public void onSensorChanged(SensorEvent sensorEvent) {
-//                    gyroX.setText("gyroX = " + String.valueOf(sensorEvent.values[0]));
-//                    gyroY.setText("gyroY = " + String.valueOf(sensorEvent.values[1]));
-//                    gyroZ.setText("gyroZ = " + String.valueOf(sensorEvent.values[2]));
-//
-//
-//
-//                }
-//
-//                @Override
-//                public void onAccuracyChanged(Sensor sensor, int i) {
-//
-//                }
-//            };
-//
-//            accelSensorListener = new SensorEventListener() {
-//                @Override
-//                public void onSensorChanged(SensorEvent sensorEvent) {
-//                    accelX.setText("accelX = " + String.valueOf(sensorEvent.values[0]));
-//                    accelY.setText("accelY = " + String.valueOf(sensorEvent.values[1]));
-//                    accelZ.setText("accelZ = " + String.valueOf(sensorEvent.values[2]));
-//
-//                    degreeTV.setText(String.format(Locale.getDefault(),"%.1f%c",sensorEvent.values[0], (char)0x00B0));
-//                }
-//
-//                @Override
-//                public void onAccuracyChanged(Sensor sensor, int i) {
-//
-//                }
-//            };
 
     }
 
@@ -198,10 +149,13 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
             degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f / %.2f", Math.toDegrees(azimuth),Math.toDegrees(pitch),Math.toDegrees(roll)));
 
             DisplayMetrics display = new DisplayMetrics();
-            float diff = display.widthPixels - ball.getTranslationX();
-//            Log.d("!TEST ORig = ", Float.toString(ballOrigin));
-//            Log.d("!TEST DIFF = ", Float.toString(diff));
+//            float diff = display.widthPixels - ball.getTranslationX();
+//            float change = ballOrigin + roll;
 
+            bubble.setTranslationX(bubble.getX() + accelValues[0]);
+
+            ball.setTranslationX(ball.getX() + accelValues[0]);
+            ball.setTranslationY(ball.getY() + accelValues[1]);
 
         }
     }
@@ -217,22 +171,11 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
 
         mySensorManager.registerListener(this, magno, SensorManager.SENSOR_DELAY_NORMAL);
         mySensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL);
-
-//        // Register Gyroscope Sensor Event Listener
-//        mySensorManager.registerListener(magnoEventListener, magno, SensorManager.SENSOR_DELAY_NORMAL);
-//
-//        // Register Accelerometer Sensor Event Listener
-//        mySensorManager.registerListener(accelSensorListener, accel,SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mySensorManager.unregisterListener(this);
-//        // Unregister Gyroscope Sensor Event Listener
-//        mySensorManager.unregisterListener(magnoEventListener);
-//
-//        // Unregister Accelerometer Sensor Event Listener
-//        mySensorManager.unregisterListener(accelSensorListener);
     }
 }
