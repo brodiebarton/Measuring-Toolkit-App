@@ -4,6 +4,7 @@
     android:id="@+id/CompassConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E2C100"
     android:orientation="vertical">
 
     <TextView
@@ -13,7 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="40dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#3B3B3B" />
 
     <ImageView
         android:id="@+id/imageViewCompass"
@@ -21,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvHeading"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/compass"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/todo"
+        android:src="@drawable/compass" />
 
     <Button
         android:id="@+id/backButton_compass"

@@ -42,7 +42,7 @@
         <activity
             android:name=".BubbleLevelActivity"
             android:label="Bubble Level"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="userPortrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

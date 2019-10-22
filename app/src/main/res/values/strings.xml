@@ -6,7 +6,7 @@
     <string name="level_menu_text">Level</string>
     <string name="back_button_text">Back</string>
     <string name="todo">TODO</string>
-    <string name="degreeSymbol">\u00B0</string>
+    <string name="degreeSymbol">0x00B0</string>
     <string name="latitude">Latitude: </string>
     <string name="longitude">Longitude: </string>
 </resources>
