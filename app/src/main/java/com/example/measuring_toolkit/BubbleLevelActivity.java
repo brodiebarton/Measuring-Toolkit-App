@@ -119,9 +119,11 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
     }
 
 
-
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+
+        final float originX;
+        final float originY;
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
@@ -144,19 +146,28 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
                 azimuth = orientValues[0];
                 pitch = orientValues[1];
                 roll = orientValues[2];
+
+                originX = (float)Math.toDegrees(roll);
+                originY = (float)Math.toDegrees(pitch);
+            } else {
+                originX = 0f;
+                originY = 0f;
             }
 
             degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f / %.2f", Math.toDegrees(azimuth),Math.toDegrees(pitch),Math.toDegrees(roll)));
 
-            DisplayMetrics display = new DisplayMetrics();
-//            float diff = display.widthPixels - ball.getTranslationX();
-//            float change = ballOrigin + roll;
+//            DisplayMetrics display = new DisplayMetrics();
 
-            bubble.setTranslationX(bubble.getX() + accelValues[0]);
+            float posX = (float)(-4.87 * Math.toDegrees(roll) + 667);
+            float posY = (float)(4.87 * Math.toDegrees(pitch) + 1097);
 
-            ball.setTranslationX(ball.getX() + accelValues[0]);
-            ball.setTranslationY(ball.getY() + accelValues[1]);
+            bubble.setTranslationX(posX);
 
+            ball.setTranslationX(posX);
+            ball.setTranslationY(posY);
+
+            Log.d("!TEST ball x = ", Float.toString(ball.getX()));
+            Log.d("!TEST ball y = ", Float.toString(ball.getY()));
         }
     }
 
