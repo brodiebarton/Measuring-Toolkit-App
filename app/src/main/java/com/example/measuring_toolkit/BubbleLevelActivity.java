@@ -20,12 +20,14 @@ import java.util.Locale;
 public class BubbleLevelActivity extends AppCompatActivity implements SensorEventListener {
 
     private Button backButton;
-    private TextView degreeTV;
+    private TextView degreeTV, bubbleContainer;
     private SensorManager mySensorManager;
     private Sensor magno, accel;;
-    private ImageView ball, bubble;
+    private ImageView ball, bubble, circle, center;
     private float[] accelValues, magValues, matrixR, matrixI;
     private float azimuth, pitch, roll, ballOrigin;
+    private float originX;
+    private float originY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
         // Initialization
         ball = findViewById(R.id.ball_imageView);
         bubble = findViewById(R.id.bubble_imageView);
+        circle = findViewById(R.id.circle_imageView);
+        center = findViewById(R.id.center_imageView);
+        bubbleContainer = findViewById(R.id.bubble_background);
 
 
             matrixR = new float[9];
@@ -96,34 +101,39 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
         int bubbleWidth = bubble.getWidth();
         int bubbleHeight = bubble.getHeight();
 
-        ball.setTranslationX((int)((display.widthPixels * 0.5) - (ballWidth * 0.5)));
-        ball.setTranslationY((int)((display.heightPixels * 0.5) - (ballHeight) - 108));
+//        ball.setTranslationX((int)((display.widthPixels * 0.5) - (ballWidth * 0.5)));
+//        ball.setTranslationY((int)((display.heightPixels * 0.5) - (ballHeight * 0.5)));
+        ball.setTranslationX(center.getX());
+        ball.setTranslationY(center.getY());
 
         bubble.setTranslationX((int)((display.widthPixels * 0.5) - (bubbleWidth * 0.5)));
-        bubble.setTranslationY(130f);
+        bubble.setTranslationY(bubbleContainer.getY());
 
         ballOrigin = ball.getTranslationX();
 
-        Log.d("!TEST width = ", Integer.toString(display.widthPixels));
-        Log.d("!TEST height = ", Integer.toString(display.heightPixels));
+//        Log.d("!TEST width = ", Integer.toString(display.widthPixels));
+//        Log.d("!TEST height = ", Integer.toString(display.heightPixels));
+//
+//        Log.d("!TEST ball x = ",Float.toString(ball.getTranslationX()));
+//        Log.d("!TEST ball y = ",Float.toString(ball.getTranslationY()));
+//        Log.d("!TEST bubble x = ",Float.toString(bubble.getTranslationX()));
+//        Log.d("!TEST bubble y = ",Float.toString(bubble.getTranslationY()));
+//
+//        Log.d("!TEST ball width = ", Integer.toString(ball.getWidth()));
+//        Log.d("!TEST ball height = ", Integer.toString(ball.getHeight()));
+//        Log.d("!TEST bubble width = ", Integer.toString(bubble.getWidth()));
+//        Log.d("!TEST bubble height = ", Integer.toString(bubble.getHeight()));
 
-        Log.d("!TEST ball x = ",Float.toString(ball.getTranslationX()));
-        Log.d("!TEST ball y = ",Float.toString(ball.getTranslationY()));
-        Log.d("!TEST bubble x = ",Float.toString(bubble.getTranslationX()));
-        Log.d("!TEST bubble y = ",Float.toString(bubble.getTranslationY()));
+        originX = ball.getTranslationX();
+        originY = ball.getTranslationY();
 
-        Log.d("!TEST ball width = ", Integer.toString(ball.getWidth()));
-        Log.d("!TEST ball height = ", Integer.toString(ball.getHeight()));
-        Log.d("!TEST bubble width = ", Integer.toString(bubble.getWidth()));
-        Log.d("!TEST bubble height = ", Integer.toString(bubble.getHeight()));
+        Log.d("!TEST Window origin X = ", Float.toString(originX));
+        Log.d("!TEST Window origin Y = ", Float.toString(originY));
     }
 
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
-        final float originX;
-        final float originY;
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
@@ -147,19 +157,29 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
                 pitch = orientValues[1];
                 roll = orientValues[2];
 
-                originX = (float)Math.toDegrees(roll);
-                originY = (float)Math.toDegrees(pitch);
+//                originX = (float)Math.toDegrees(roll);
+//                originY = (float)Math.toDegrees(pitch);
             } else {
-                originX = 0f;
-                originY = 0f;
+//                originX = 0f;
+//                originY = 0f;
             }
 
             degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f / %.2f", Math.toDegrees(azimuth),Math.toDegrees(pitch),Math.toDegrees(roll)));
 
-//            DisplayMetrics display = new DisplayMetrics();
+            DisplayMetrics display = new DisplayMetrics();
 
-            float posX = (float)(-4.87 * Math.toDegrees(roll) + 667);
-            float posY = (float)(4.87 * Math.toDegrees(pitch) + 1097);
+//            float posX = (float)(-4.87 * Math.toDegrees(roll) + 667);
+//            float posY = (float)(4.87 * Math.toDegrees(pitch) + 1097);
+//            float circleWidth = circle.getWidth();
+
+            float posX = (float)(-4.5 * Math.toDegrees(roll) + display.widthPixels);
+            float posY = (float)(4.5 * Math.toDegrees(pitch) + display.heightPixels);
+
+//            float posX = Math.abs(10 - roll);
+//            float posY = Math.abs(10 - pitch);
+
+            Log.d("!TEST POS x = ", Float.toString(posX));
+            Log.d("!TEST POS y = ", Float.toString(posY));
 
             bubble.setTranslationX(posX);
 
@@ -168,6 +188,8 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
 
             Log.d("!TEST ball x = ", Float.toString(ball.getX()));
             Log.d("!TEST ball y = ", Float.toString(ball.getY()));
+
+
         }
     }
 

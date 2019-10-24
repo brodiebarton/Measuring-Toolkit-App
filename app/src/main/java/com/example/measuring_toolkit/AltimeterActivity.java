@@ -18,9 +18,10 @@ import androidx.core.content.ContextCompat;
 public class AltimeterActivity extends AppCompatActivity implements LocationListener {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 99;
-    private Button backButton;
+    private Button backButton, switchUnits;
     private TextView alt, lat, lon;
     private LocationManager locationManager;
+    private boolean ft = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +32,9 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
         lat = findViewById(R.id.lat);
         lon = findViewById(R.id.lon);
         backButton = findViewById(R.id.backButton_altimeter);
+        switchUnits = findViewById(R.id.units);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
-            Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-            onLocationChanged(location);
-        }
-        else{
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_READ_LOCATION);
-        }
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +46,31 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
             }
         });
 
+        switchUnits.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                ft = !ft;
+            }
+        });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            onLocationChanged(location);
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_READ_LOCATION);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -68,7 +84,7 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
                         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
-                        Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+                        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         onLocationChanged(location);
 
                     }else{
@@ -88,13 +104,23 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
 
     @Override
     public void onLocationChanged(Location location) {
-        double a = location.getAltitude();
-        double la = location.getLatitude();
-        double lo = location.getLongitude();
 
-        alt.setText(a + "m");
-        lat.setText(String.format("%.5f", la));
-        lon.setText(String.format("%.5f", lo));
+
+//            double a = location.getAltitude();
+            double la = location.getLatitude();
+            double lo = location.getLongitude();
+
+
+//            if (ft) {
+//                alt.setText(String.format("%.2f ft", (a * 3.821)));
+//            } else {
+//                alt.setText(String.format("%.2f m", a));
+//            }
+
+            lat.setText(String.format("%.5f", la));
+            lon.setText(String.format("%.5f", lo));
+
+
     }
 
     @Override
@@ -111,5 +137,10 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
     public void onProviderDisabled(String s) {
 
     }
-}
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+}
