@@ -96,16 +96,22 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
 
     @Override
     public void onLocationChanged(Location location) {
-        double a = location.getAltitude();
+        if(location.hasAltitude()){
+            double a = location.getAltitude();
+            if(ft){
+                alt.setText(String.format("%.2f ft", (a * 3.821)));
+            }
+            else {
+                alt.setText(String.format("%.2f m", a));
+            }
+        }
+        else{
+            alt.setText("No Data");
+        }
+
         double la = location.getLatitude();
         double lo = location.getLongitude();
 
-        if(ft){
-            alt.setText(String.format("%.2f ft", (a * 3.821)));
-        }
-        else {
-            alt.setText(String.format("%.2f m", a));
-        }
         lat.setText(String.format("%.5f", la));
         lon.setText(String.format("%.5f", lo));
     }
