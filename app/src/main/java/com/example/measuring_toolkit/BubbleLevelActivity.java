@@ -127,8 +127,8 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
         originX = ball.getTranslationX();
         originY = ball.getTranslationY();
 
-        Log.d("!TEST Window origin X = ", Float.toString(originX));
-        Log.d("!TEST Window origin Y = ", Float.toString(originY));
+        Log.d("!TEST Window orig X = ", Float.toString(originX));
+        Log.d("!TEST Window orig Y = ", Float.toString(originY));
     }
 
 
@@ -168,12 +168,12 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
 
             DisplayMetrics display = new DisplayMetrics();
 
-//            float posX = (float)(-4.87 * Math.toDegrees(roll) + 667);
-//            float posY = (float)(4.87 * Math.toDegrees(pitch) + 1097);
+            float posX = (float)(-4.87 * Math.toDegrees(roll) + 667);
+            float posY = (float)(4.87 * Math.toDegrees(pitch) + 1097);
 //            float circleWidth = circle.getWidth();
-
-            float posX = (float)(-4.5 * Math.toDegrees(roll) + display.widthPixels);
-            float posY = (float)(4.5 * Math.toDegrees(pitch) + display.heightPixels);
+//
+//            float posX = (float)(-(display.widthPixels / 180) * Math.toDegrees(roll) + (display.widthPixels / 2));
+//            float posY = (float)((display.widthPixels / 180) * Math.toDegrees(pitch) + (display.heightPixels / 2));
 
 //            float posX = Math.abs(10 - roll);
 //            float posY = Math.abs(10 - pitch);
