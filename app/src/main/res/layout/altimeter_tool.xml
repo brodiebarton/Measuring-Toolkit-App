@@ -85,7 +85,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+<<<<<<< HEAD
                 android:text="@string/switch_units"
+=======
+                android:text="@string/swith_units"
+>>>>>>> level
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </TableRow>
 

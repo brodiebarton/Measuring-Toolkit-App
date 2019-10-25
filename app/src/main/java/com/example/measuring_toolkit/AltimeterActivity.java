@@ -131,4 +131,3 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
 
     }
 }
-
