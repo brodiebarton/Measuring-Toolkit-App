@@ -4,6 +4,12 @@
     <string name="compass_menu_text">Compass</string>
     <string name="altimeter_menu_text">Altimeter</string>
     <string name="level_menu_text">Level</string>
+    <string name="stopwatch_menu_text">Stopwatch</string>
+    <string name="timer_menu_text">Timer</string>
+    <string name="seismometer_menu_text">Seismometer</string>
+    <string name="metronome_menu_text">Metronome</string>
+    <string name="barometer_menu_text">Barometer</string>
+    <string name="teslameter_menu_text">Teslameter</string>
     <string name="back_button_text">Back</string>
     <string name="todo">TODO</string>
     <string name="degreeSymbol">0x00B0</string>

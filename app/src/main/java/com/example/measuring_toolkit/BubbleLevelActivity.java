@@ -1,6 +1,8 @@
 package com.example.measuring_toolkit;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +31,7 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
     private float azimuth, pitch, roll, ballOrigin;
     private float originX;
     private float originY;
+    private Point centerPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
         circle = findViewById(R.id.circle_imageView);
         center = findViewById(R.id.center_imageView);
         bubbleContainer = findViewById(R.id.bubble_background);
+
+        centerPoint = new Point();
 
 
             matrixR = new float[9];
@@ -92,8 +98,10 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        DisplayMetrics display = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(display);
+        DisplayMetrics display = Resources.getSystem().getDisplayMetrics();
+        centerPoint.x = (int)center.getX();
+        centerPoint.y = (int)center.getY();
+
         ball.setScaleType(ImageView.ScaleType.FIT_XY);
         int ballWidth = ball.getWidth();
         int ballHeight = ball.getHeight();
@@ -101,34 +109,17 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
         int bubbleWidth = bubble.getWidth();
         int bubbleHeight = bubble.getHeight();
 
-//        ball.setTranslationX((int)((display.widthPixels * 0.5) - (ballWidth * 0.5)));
-//        ball.setTranslationY((int)((display.heightPixels * 0.5) - (ballHeight * 0.5)));
-        ball.setTranslationX(center.getX());
-        ball.setTranslationY(center.getY());
+        ball.setX(centerPoint.x);
+        ball.setY(centerPoint.y);
 
         bubble.setTranslationX((int)((display.widthPixels * 0.5) - (bubbleWidth * 0.5)));
         bubble.setTranslationY(bubbleContainer.getY());
 
         ballOrigin = ball.getTranslationX();
 
-//        Log.d("!TEST width = ", Integer.toString(display.widthPixels));
-//        Log.d("!TEST height = ", Integer.toString(display.heightPixels));
-//
-//        Log.d("!TEST ball x = ",Float.toString(ball.getTranslationX()));
-//        Log.d("!TEST ball y = ",Float.toString(ball.getTranslationY()));
-//        Log.d("!TEST bubble x = ",Float.toString(bubble.getTranslationX()));
-//        Log.d("!TEST bubble y = ",Float.toString(bubble.getTranslationY()));
-//
-//        Log.d("!TEST ball width = ", Integer.toString(ball.getWidth()));
-//        Log.d("!TEST ball height = ", Integer.toString(ball.getHeight()));
-//        Log.d("!TEST bubble width = ", Integer.toString(bubble.getWidth()));
-//        Log.d("!TEST bubble height = ", Integer.toString(bubble.getHeight()));
-
         originX = ball.getTranslationX();
         originY = ball.getTranslationY();
 
-        Log.d("!TEST Window orig X = ", Float.toString(originX));
-        Log.d("!TEST Window orig Y = ", Float.toString(originY));
     }
 
 
@@ -157,38 +148,22 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
                 pitch = orientValues[1];
                 roll = orientValues[2];
 
-//                originX = (float)Math.toDegrees(roll);
-//                originY = (float)Math.toDegrees(pitch);
             } else {
-//                originX = 0f;
-//                originY = 0f;
             }
 
-            degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f / %.2f", Math.toDegrees(azimuth),Math.toDegrees(pitch),Math.toDegrees(roll)));
+            degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f", Math.toDegrees(roll), Math.toDegrees(pitch)));
+//            degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f / %.2f", Math.toDegrees(Math.asin(accelValues[0] / 9.8)), Math.asin(accelValues[1] / 9.8), Math.asin(accelValues[2] / 9.8)));
 
-            DisplayMetrics display = new DisplayMetrics();
+            DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
 
-            float posX = (float)(-4.87 * Math.toDegrees(roll) + 667);
-            float posY = (float)(4.87 * Math.toDegrees(pitch) + 1097);
-//            float circleWidth = circle.getWidth();
-//
-//            float posX = (float)(-(display.widthPixels / 180) * Math.toDegrees(roll) + (display.widthPixels / 2));
-//            float posY = (float)((display.widthPixels / 180) * Math.toDegrees(pitch) + (display.heightPixels / 2));
+            float posX = (float)(-4.87 * Math.toDegrees(roll) + 480);
+            float posY = (float)(4.87 * Math.toDegrees(pitch) + 840);
 
-//            float posX = Math.abs(10 - roll);
-//            float posY = Math.abs(10 - pitch);
 
-            Log.d("!TEST POS x = ", Float.toString(posX));
-            Log.d("!TEST POS y = ", Float.toString(posY));
+            bubble.setX(posX);
 
-            bubble.setTranslationX(posX);
-
-            ball.setTranslationX(posX);
-            ball.setTranslationY(posY);
-
-            Log.d("!TEST ball x = ", Float.toString(ball.getX()));
-            Log.d("!TEST ball y = ", Float.toString(ball.getY()));
-
+            ball.setX(posX);
+            ball.setY(posY);
 
         }
     }
@@ -210,5 +185,11 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
     protected void onPause() {
         super.onPause();
         mySensorManager.unregisterListener(this);
+    }
+
+    double calcDistance(Point a,  Point b) {
+        double dist = 0;
+        dist = Math.sqrt(Math.pow( (a.x - b.x), 2) + Math.pow( (a.y - b.y), 2));
+        return dist;
     }
 }

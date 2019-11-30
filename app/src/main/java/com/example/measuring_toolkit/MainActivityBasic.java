@@ -2,7 +2,6 @@ package com.example.measuring_toolkit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityBasic extends AppCompatActivity {
 
     ArrayList<Button> menuButtons = new ArrayList<Button>();
     ViewGroup mainMenuGroup;
@@ -20,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_main_menu_basic);
 
         // ViewGroup that contains Menu Buttons
-        mainMenuGroup = (ViewGroup)findViewById(R.id.MainMenu);
+        mainMenuGroup = (ViewGroup)findViewById(R.id.MainMenuLayout);
 
         // Loop through main menu ViewGroup
         for (int i = 0; i < mainMenuGroup.getChildCount(); i++) {

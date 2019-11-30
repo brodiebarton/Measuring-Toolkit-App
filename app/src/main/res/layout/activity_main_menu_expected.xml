@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainMenuGroup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/menuRow0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/compassMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#E2C100"
+            android:backgroundTint="#E2C100"
+            android:drawableTop="@drawable/ic_explore_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/compass_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/altimeterMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#4598C4"
+            android:backgroundTint="#4598C4"
+            android:drawableTop="@drawable/ic_flight_takeoff_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/altimeter_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/levelMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:layout_marginEnd="3dp"
+            android:background="#85C443"
+            android:backgroundTint="#85C443"
+            android:drawableTop="@drawable/ic_gps_fixed_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/level_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/stopwatchMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#E28400"
+            android:backgroundTint="#e28400"
+            android:drawableTop="@drawable/ic_timer_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/stopwatch_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/timerMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#D43D43"
+            android:backgroundTint="#d43d43"
+            android:drawableTop="@drawable/ic_alarm_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/timer_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/seismometerMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#8953A8"
+            android:backgroundTint="#8953a8"
+            android:drawableTop="@drawable/ic_graphic_eq_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/seismometer_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menuRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/metronomeMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#D06297"
+            android:backgroundTint="#d06297"
+            android:drawableTop="@drawable/ic_music_note_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/metronome_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/barometerMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#519C9A"
+            android:backgroundTint="#519C9A"
+            android:drawableTop="@drawable/ic_cloud_queue_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/barometer_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/teslameterMenuButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="360px"
+            android:layout_height="360px"
+            android:background="#007AB0"
+            android:backgroundTint="#007AB0"
+            android:drawableTop="@drawable/ic_equalizer_black_24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/teslameter_menu_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3B3B3B"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>
+
