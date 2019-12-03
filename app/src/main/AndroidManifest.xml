@@ -26,7 +26,8 @@
 
         <activity
             android:name=".CompassActivity"
-            android:label="Compass" >
+            android:label="Compass"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -34,7 +35,8 @@
 
         <activity
             android:name=".AltimeterActivity"
-            android:label="Altimeter" >
+            android:label="Altimeter"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -51,7 +53,8 @@
 
         <activity
             android:name=".StopwatchActivity"
-            android:label="Stopwatch" >
+            android:label="Stopwatch"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -59,7 +62,8 @@
 
         <activity
             android:name=".TimerActivity"
-            android:label="Timer" >
+            android:label="Timer"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -67,7 +71,8 @@
 
         <activity
             android:name=".SeismometerActivity"
-            android:label="Seismometer" >
+            android:label="Seismometer"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -75,7 +80,8 @@
 
         <activity
             android:name=".MetronomeActivity"
-            android:label="Metronome" >
+            android:label="Metronome"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -83,7 +89,8 @@
 
         <activity
             android:name=".BarometerActivity"
-            android:label="Barometer" >
+            android:label="Barometer"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -91,7 +98,8 @@
 
         <activity
             android:name=".TeslameterActivity"
-            android:label="Teslameter" >
+            android:label="Teslameter"
+            android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

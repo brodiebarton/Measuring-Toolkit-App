@@ -162,7 +162,7 @@
             android:textColor="#3B3B3B"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/teslameterMenuButton"

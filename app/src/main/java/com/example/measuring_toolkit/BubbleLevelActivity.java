@@ -151,14 +151,21 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
             } else {
             }
 
-            degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f", Math.toDegrees(roll), Math.toDegrees(pitch)));
-//            degreeTV.setText(String.format(Locale.getDefault(),"%.2f / %.2f / %.2f", Math.toDegrees(Math.asin(accelValues[0] / 9.8)), Math.asin(accelValues[1] / 9.8), Math.asin(accelValues[2] / 9.8)));
+            double xVal = Math.toDegrees(roll);
+            double yVal = Math.toDegrees(pitch);
 
-            DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+            if (String.format(Locale.getDefault(), "%.0f", xVal).equals("-0")) {
+                xVal = 0.0;
+            }
 
-            float posX = (float)(-4.87 * Math.toDegrees(roll) + 480);
-            float posY = (float)(4.87 * Math.toDegrees(pitch) + 840);
+            if (String.format(Locale.getDefault(), "%.0f", yVal).equals("-0")) {
+                yVal = 0.0;
+            }
 
+            degreeTV.setText(String.format(Locale.getDefault(),"X:%.0f" + (char)0x00B0 + " Y:%.0f" + (char)0x00B0, xVal, yVal));
+
+            float posX = (float)(-4.87 * Math.toDegrees(roll) + 500);
+            float posY = (float)(4.87 * Math.toDegrees(pitch) + 846);
 
             bubble.setX(posX);
 
@@ -177,8 +184,8 @@ public class BubbleLevelActivity extends AppCompatActivity implements SensorEven
     protected void onResume() {
         super.onResume();
 
-        mySensorManager.registerListener(this, magno, SensorManager.SENSOR_DELAY_NORMAL);
-        mySensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL);
+        mySensorManager.registerListener(this, magno, SensorManager.SENSOR_DELAY_UI);
+        mySensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override

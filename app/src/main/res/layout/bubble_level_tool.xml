@@ -70,10 +70,10 @@
 
     <ImageView
         android:id="@+id/ball_imageView"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         app:srcCompat="@drawable/ic_lens_black_24dp"
-        tools:layout_editor_absoluteX="187dp"
+        tools:layout_editor_absoluteX="193dp"
         tools:layout_editor_absoluteY="320dp" />
 
     <TextView

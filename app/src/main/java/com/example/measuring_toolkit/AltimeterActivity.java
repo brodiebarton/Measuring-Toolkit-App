@@ -1,5 +1,4 @@
 package com.example.measuring_toolkit;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -7,9 +6,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -37,13 +38,26 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
-            Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-            onLocationChanged(location);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if(location != null) {
+                Log.d("TEST", "INITIAL LOC");
+                onLocationChanged(location);
+            } else {
+                Log.d("TEST", "GPS Enabled: " + locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+                Log.d("TEST", "Network Enabled: " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
+                if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        onLocationChanged(location);
+                    }
+                }
+            }
+
         }
         else{
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_READ_LOCATION);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_READ_LOCATION);
         }
 
 
@@ -65,6 +79,55 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_READ_LOCATION);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            if(location != null) {
+                Log.d("TEST", "INITIAL LOC");
+                onLocationChanged(location);
+            } else {
+                Log.d("TEST", "GPS Enabled: " + locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+                Log.d("TEST", "Network Enabled: " + locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER));
+                if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        onLocationChanged(location);
+                    }
+                }
+            }
+
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_READ_LOCATION);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_LOCATION: {
@@ -76,8 +139,10 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
                         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
-                        Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-                        onLocationChanged(location);
+                        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+                            onLocationChanged(location);
+                        }
 
                     }else{
                         finish();
@@ -96,24 +161,26 @@ public class AltimeterActivity extends AppCompatActivity implements LocationList
 
     @Override
     public void onLocationChanged(Location location) {
-        if (location != null) {
-            if (location.hasAltitude()) {
-                double a = location.getAltitude();
-                if (ft) {
-                    alt.setText(String.format("%.2f ft", (a * 3.821)));
-                } else {
-                    alt.setText(String.format("%.2f m", a));
-                }
-            } else {
-                alt.setText("No Data");
+        Log.d("TEST", "onLocChanged provider: " + location.getProvider() + " hasAltitude: " + location.hasAltitude());
+        if(location.hasAltitude()){
+            double a = location.getAltitude();
+            Log.d("TEST", "altitude:  " + a + " provider: " + location.getProvider());
+            if(ft){
+                alt.setText(String.format("%.2f ft", (a * 3.28084)));
             }
-
-            double la = location.getLatitude();
-            double lo = location.getLongitude();
-
-            lat.setText(String.format("%.5f", la));
-            lon.setText(String.format("%.5f", lo));
+            else {
+                alt.setText(String.format("%.2f m", a));
+            }
         }
+        else{
+            alt.setText("No Data");
+        }
+
+        double la = location.getLatitude();
+        double lo = location.getLongitude();
+
+        lat.setText(String.format("%.5f", la));
+        lon.setText(String.format("%.5f", lo));
     }
 
     @Override

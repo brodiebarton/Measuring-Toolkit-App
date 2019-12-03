@@ -27,11 +27,6 @@ public class MainActivityExpected extends AppCompatActivity {
         // ViewGroup that contains Menu Buttons
         mainMenuGroup = (ViewGroup)findViewById(R.id.MainMenuGroup);
 
-        DisplayMetrics disp = Resources.getSystem().getDisplayMetrics();
-        Toast.makeText(this, "width = " + disp.density, Toast.LENGTH_SHORT).show();
-
-
-
         // Loop through main menu ViewGroup
         for (int i = 0; i < mainMenuGroup.getChildCount(); i++) {
 
@@ -87,32 +82,38 @@ public class MainActivityExpected extends AppCompatActivity {
 
                 // Stopwatch Menu Button Is Clicked
                 case "stopwatchMenuButton":
-                    Toast.makeText(MainActivityExpected.this, "Clicked Stopwatch", Toast.LENGTH_SHORT).show();
+                    Intent goToStopwatchActivity = new Intent(getApplicationContext(), StopwatchActivity.class);
+                    startActivity(goToStopwatchActivity);
                     break;
 
                 // Timer Menu Button Is Clicked
                 case "timerMenuButton":
-                    Toast.makeText(MainActivityExpected.this, "Clicked Timer", Toast.LENGTH_SHORT).show();
+                    Intent goToTimerActivity = new Intent(getApplicationContext(), TimerActivity.class);
+                    startActivity(goToTimerActivity);
                     break;
 
                 // Seismometer Menu Button Is Clicked
                 case "seismometerMenuButton":
-                    Toast.makeText(MainActivityExpected.this, "Clicked Seismometer", Toast.LENGTH_SHORT).show();
+                    Intent goToSeismometerActivity = new Intent(getApplicationContext(), SeismometerActivity.class);
+                    startActivity(goToSeismometerActivity);
                     break;
 
                 // Metronome Menu Button Is Clicked
                 case "metronomeMenuButton":
-                    Toast.makeText(MainActivityExpected.this, "Clicked Metronome", Toast.LENGTH_SHORT).show();
+                    Intent goToMetronomeActivity = new Intent(getApplicationContext(), MetronomeActivity.class);
+                    startActivity(goToMetronomeActivity);
                     break;
 
                 // Barometer Menu Button Is Clicked
                 case "barometerMenuButton":
-                    Toast.makeText(MainActivityExpected.this, "Clicked Barometer", Toast.LENGTH_SHORT).show();
+                    Intent goToBarometerActivity = new Intent(getApplicationContext(), BarometerActivity.class);
+                    startActivity(goToBarometerActivity);
                     break;
 
                 // Teslameter Menu Button Is Clicked
                 case "teslameterMenuButton":
-                    Toast.makeText(MainActivityExpected.this, "Clicked Teslameter", Toast.LENGTH_SHORT).show();
+                    Intent goToTeslameterActivity = new Intent(getApplicationContext(), TeslameterActivity.class);
+                    startActivity(goToTeslameterActivity);
                     break;
 
                 // Default if case is not matched

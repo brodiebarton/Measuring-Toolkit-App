@@ -26,7 +26,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     private float currentAzimuth = 0f;
     private SensorManager mSensorManager;
 
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    private static DecimalFormat df = new DecimalFormat("0");
     Button backButton;
 
     @Override
@@ -53,8 +53,8 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onResume(){
         super.onResume();
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), 100000,250000);
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), 100000 ,250000);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 float oriantation[] = new float[3];
                 SensorManager.getOrientation(R, oriantation);
                 azimuth = (float)Math.toDegrees(oriantation[0]);
-                azimuth = (azimuth+360)%360;
+                azimuth = (azimuth + 360) % 360;
 
                 Animation anim = new RotateAnimation(currentAzimuth, azimuth, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 currentAzimuth = azimuth;

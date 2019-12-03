@@ -16,4 +16,13 @@
     <string name="latitude">Latitude: </string>
     <string name="longitude">Longitude: </string>
     <string name="switch_units">Switch Units</string>
+    <string name="hours">hrs</string>
+    <string name="minutes">min</string>
+    <string name="seconds">sec</string>
+    <string name="cancel">CANCEL</string>
+    <string name="start">START</string>
+    <string name="_00_00_00">00:00.000</string>
+    <string name="pause">Pause</string>
+    <string name="reset">Reset</string>
+    <string name="lap">LAP</string>
 </resources>
