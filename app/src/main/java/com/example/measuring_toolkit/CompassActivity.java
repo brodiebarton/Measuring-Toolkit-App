@@ -20,13 +20,13 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
     private ImageView compassImage;
     private TextView textDegrees;
-    private float[] mGravity = new float[3];
-    private float[] mGeomagnetic = new float[3];
+    private float[] myGravity = new float[3];
+    private float[] myGeomagnetic = new float[3];
     private float azimuth = 0f;
     private float currentAzimuth = 0f;
-    private SensorManager mSensorManager;
+    private SensorManager SensorManager;
 
-    private static DecimalFormat df = new DecimalFormat("0");
+    private static DecimalFormat df = new DecimalFormat("0.00");
     Button backButton;
 
     @Override
@@ -36,7 +36,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         compassImage = (ImageView) findViewById(R.id.imageViewCompass);
         textDegrees = (TextView) findViewById(R.id.tvHeading);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        SensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         backButton = findViewById(R.id.backButton_compass);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -53,14 +53,17 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onResume(){
         super.onResume();
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), 100000,250000);
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), 100000 ,250000);
+        //system's orientation sensors that are used to calculate the azimuth which is used to display value of the orientation in degrees.
+        SensorManager.registerListener(this, SensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
+        SensorManager.registerListener(this, SensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-        mSensorManager.unregisterListener(this);
+
+        //Unregister the listener to save on battery power when tool is not in use
+        SensorManager.unregisterListener(this);
     }
 
     @Override
@@ -69,27 +72,33 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         final float alpha = 0.50f;
         synchronized (this){
             if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-                mGravity[0] = alpha*mGravity[0]+(1-alpha)*sensorEvent.values[0];
-                mGravity[1] = alpha*mGravity[1]+(1-alpha)*sensorEvent.values[1];
-                mGravity[2] = alpha*mGravity[2]+(1-alpha)*sensorEvent.values[2];
+
+                //XYZ values gathered from the accelerometer sensor
+                myGravity[0] = alpha*myGravity[0]+(1-alpha)*sensorEvent.values[0];
+                myGravity[1] = alpha*myGravity[1]+(1-alpha)*sensorEvent.values[1];
+                myGravity[2] = alpha*myGravity[2]+(1-alpha)*sensorEvent.values[2];
             }
 
             if(sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
-                mGeomagnetic[0] = alpha*mGeomagnetic[0]+(1-alpha)*sensorEvent.values[0];
-                mGeomagnetic[1] = alpha*mGeomagnetic[1]+(1-alpha)*sensorEvent.values[1];
-                mGeomagnetic[2] = alpha*mGeomagnetic[2]+(1-alpha)*sensorEvent.values[2];
+
+                //XYZ values gathered from the magnetic field sensor
+                myGeomagnetic[0] = alpha*myGeomagnetic[0]+(1-alpha)*sensorEvent.values[0];
+                myGeomagnetic[1] = alpha*myGeomagnetic[1]+(1-alpha)*sensorEvent.values[1];
+                myGeomagnetic[2] = alpha*myGeomagnetic[2]+(1-alpha)*sensorEvent.values[2];
             }
 
+            //Matrix from the two sensors which are used for the azimuth value.
             float R[] = new float[9];
             float I[] = new float[9];
-            boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+            boolean success = SensorManager.getRotationMatrix(R, I, myGravity, myGeomagnetic);
 
             if(success){
                 float oriantation[] = new float[3];
                 SensorManager.getOrientation(R, oriantation);
                 azimuth = (float)Math.toDegrees(oriantation[0]);
-                azimuth = (azimuth + 360) % 360;
+                azimuth = (azimuth+360)%360;
 
+                //rotation animation
                 Animation anim = new RotateAnimation(currentAzimuth, azimuth, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 currentAzimuth = azimuth;
 
@@ -99,8 +108,10 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
                 anim.setRepeatCount(0);
                 anim.setFillAfter(true);
 
+                //Rotating animation of compass image
                 compassImage.startAnimation(anim);
 
+                //Correctly display the orientation letter according to the value of the calculated azimuth.
                 if (azmth <= 22 || azmth >= 337) {
                     textDegrees.setText(df.format(azimuth) + "° N");
                 } else if (azmth >= 23 && azmth <= 67) {

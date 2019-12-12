@@ -1,6 +1,5 @@
 package com.example.measuring_toolkit;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 public class StopwatchActivity extends AppCompatActivity {
 
@@ -23,8 +21,9 @@ public class StopwatchActivity extends AppCompatActivity {
     ListView listView ;
 
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
-    int Seconds, Minutes, MilliSeconds, lapCounter;
+    int Seconds, Minutes, MilliSeconds ;
 
+    //Handler created to control and display the stopwatch's running time.
     Handler handler;
 
     String[] ListElements = new String[] {  };
@@ -43,13 +42,12 @@ public class StopwatchActivity extends AppCompatActivity {
         lap = (Button)findViewById(R.id.lapButton) ;
         listView = (ListView)findViewById(R.id.listview1);
 
-        lapCounter = 0;
-
         handler = new Handler() ;
 
+        //Array list and adapter created to store the times after lap button is hit
         ListElementsArrayList = new ArrayList<String>(Arrays.asList(ListElements));
 
-        adapter = new ArrayAdapter<String>(StopwatchActivity.this,
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 ListElementsArrayList
         );
@@ -94,7 +92,6 @@ public class StopwatchActivity extends AppCompatActivity {
                 Seconds = 0 ;
                 Minutes = 0 ;
                 MilliSeconds = 0 ;
-                lapCounter = 0 ;
 
                 textview.setText("00:00.000");
 
@@ -107,7 +104,8 @@ public class StopwatchActivity extends AppCompatActivity {
         lap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListElementsArrayList.add(String.format(Locale.getDefault(),"Lap %d: %s", ++lapCounter,textview.getText().toString() ));
+
+                ListElementsArrayList.add(textview.getText().toString());
 
                 adapter.notifyDataSetChanged();
 
@@ -125,10 +123,9 @@ public class StopwatchActivity extends AppCompatActivity {
             Minutes = Seconds / 60;
             Seconds = Seconds % 60;
             MilliSeconds = (int) (UpdateTime % 1000);
-            textview.setText(String.format(Locale.getDefault(), "%02d:%02d.%03d", Minutes, Seconds, MilliSeconds));
-//            textview.setText("" + String.format("%02d", Minutes) + ":"
-//                    + String.format("%02d", Seconds) + "."
-//                    + String.format("%03d", MilliSeconds));
+            textview.setText("" + String.format("%02d", Minutes) + ":"
+                    + String.format("%02d", Seconds) + "."
+                    + String.format("%03d", MilliSeconds));
 
             handler.postDelayed(this, 0);
         }
